@@ -22,8 +22,7 @@
 
 package com.restfb.types;
 
-import static com.restfb.util.DateUtils.toDateFromLongFormat;
-import static com.restfb.util.DateUtils.toDateFromShortFormat;
+import static com.restfb.util.DateUtils.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -39,6 +38,26 @@ import com.restfb.util.ReflectionUtils;
  * @since 1.5
  */
 public class Event extends NamedFacebookType {
+
+  public enum EventType {
+    attending, created, maybe, not_replied, declined;
+  }
+
+  public enum EventInfo {
+    // some options were left behind (feed, picure, photos, videos)
+    attending(User.class), declined(User.class), feed(Post.class), invited(User.class), maybe(User.class), noreply(
+        User.class), photos(Photo.class), video(Video.class);
+    private Class<?> CLASS;// @off
+
+    private EventInfo(Class<?> CLASS) {
+      this.CLASS = CLASS;
+    }
+
+    public Class<?> getCLASS() {
+      return CLASS;
+    }
+  }// @on
+
   @Facebook
   private Owner owner;
 
